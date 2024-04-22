@@ -12,6 +12,8 @@ func current_year(day):
 func next_day():
 	current_day += 1
 	set_water_level(current_day)
+	$Music.set_song(current_day)
+	$Music.play_song(current_day)
 	$Year.text = str(current_year(current_day))
 
 # Called when the node enters the scene tree for the first time. 

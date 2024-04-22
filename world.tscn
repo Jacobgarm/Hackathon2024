@@ -1,19 +1,90 @@
-[gd_scene load_steps=36 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=40 format=3 uid="uid://cc7lw43mrp7me"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
 [ext_resource type="AudioStream" uid="uid://cvw5e0bhl0my6" path="res://music/celestia.wav" id="2_dnwve"]
+[ext_resource type="PackedScene" uid="uid://c2w8tya5j5h7s" path="res://models/palmera.fbx" id="2_gmq0u"]
 [ext_resource type="Script" path="res://Music.gd" id="2_tf6oe"]
 [ext_resource type="AudioStream" uid="uid://dwbp1bm3ms3tf" path="res://music/celestiamuffled.wav" id="4_mmwp4"]
 [ext_resource type="AudioStream" uid="uid://b2wo7pgxdrib7" path="res://music/celestiadestroyed1.wav" id="5_7loc5"]
 [ext_resource type="AudioStream" uid="uid://dlqpucrrlvab4" path="res://music/celestiadestroyed2.wav" id="6_pihhv"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_yteky"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_efyjg"]
+font_size = 32
+
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_aawvg"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qwv7n"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8prgf"]
-albedo_color = Color(0.117647, 0.243137, 1, 1)
+[sub_resource type="Shader" id="Shader_p280a"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform vec2 wave_strength = vec2(0.0000001, 0.000000005);
+uniform vec2 wave_frequ = vec2(1.0, 1.0);
+uniform vec2 time_factor = vec2(12.0, 12.0);
+
+float waves(vec2 pos, float time) {
+	return (wave_strength.y * sin(pos.y * wave_frequ.y + time * time_factor.y)) + (wave_strength.x * sin(pos.x * wave_frequ.x + time * time_factor.x));
+}
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+	VERTEX.y += waves(VERTEX.xy, TIME);
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_51uha"]
+render_priority = 0
+shader = SubResource("Shader_p280a")
+shader_parameter/albedo = Color(0.117647, 0.243137, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/wave_strength = Vector2(0.5, 0.25)
+shader_parameter/wave_frequ = Vector2(12, 12)
+shader_parameter/time_factor = Vector2(1, 2)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f7jy3"]
 
@@ -77,11 +148,21 @@ data = PackedVector3Array(0, 0.5, 0, 0, 0.5, 0, 0, 0.4977, 0.0475, 0, 0.5, 0, 0.
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_orkwd")
 
+[node name="Tree" parent="." instance=ExtResource("2_gmq0u")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -12.8984, -1.38956, -3.22068)
+
+[node name="Tree2" parent="." instance=ExtResource("2_gmq0u")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 13.2784, -1.38956, -16.1994)
+
+[node name="Tree3" parent="." instance=ExtResource("2_gmq0u")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.38217, -1.38956, 5.87833)
+
 [node name="Quest" type="Label" parent="."]
 unique_name_in_owner = true
 offset_right = 270.0
 offset_bottom = 99.0
 text = "Go fishing"
+label_settings = SubResource("LabelSettings_yteky")
 
 [node name="Year" type="Label" parent="."]
 unique_name_in_owner = true
@@ -90,6 +171,7 @@ offset_top = 1.0
 offset_right = 1152.0
 offset_bottom = 100.0
 text = "1920"
+label_settings = SubResource("LabelSettings_efyjg")
 horizontal_alignment = 2
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
@@ -103,7 +185,7 @@ music_array = Array[AudioStream]([ExtResource("2_dnwve"), ExtResource("4_mmwp4")
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -2.84058, 0)
 mesh = SubResource("PlaneMesh_qwv7n")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_8prgf")
+surface_material_override/0 = SubResource("ShaderMaterial_51uha")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75405, -14.1385)
@@ -145,7 +227,8 @@ mesh = SubResource("SphereMesh_v0hxb")
 surface_material_override/0 = SubResource("StandardMaterial3D_cksqr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 14, 19)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 28.2065, 19)
+light_color = Color(1, 1, 0.6, 1)
 sky_mode = 1
 
 [node name="House" type="Area3D" parent="."]
