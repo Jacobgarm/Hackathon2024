@@ -83,6 +83,15 @@ offset_right = 270.0
 offset_bottom = 99.0
 text = "Go fishing"
 
+[node name="Year" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 882.0
+offset_top = 1.0
+offset_right = 1152.0
+offset_bottom = 100.0
+text = "1920"
+horizontal_alignment = 2
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamWAV_aawvg")
 script = ExtResource("2_tf6oe")
