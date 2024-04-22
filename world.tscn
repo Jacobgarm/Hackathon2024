@@ -1,14 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=24 format=3 uid="uid://cc7lw43mrp7me"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_o21ge"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_wjth2"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lfs8j"]
-albedo_color = Color(0.909804, 0.917647, 0.47451, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qwv7n"]
 
@@ -49,36 +42,24 @@ albedo_color = Color(0.211765, 0.188235, 0.0745098, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2t4rb"]
 albedo_color = Color(0.211765, 0.188235, 0.0745098, 1)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5jom2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_okbku"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_fs1rt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k86y8"]
+albedo_color = Color(0.964706, 0.843137, 0.690196, 1)
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_orkwd")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(3.10195, 0, 0, 0, 0.99239, 0.123134, 0, -0.123134, 0.99239, 0, 0, 0)
+[node name="Water" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, -10, 0)
-shape = SubResource("BoxShape3D_o21ge")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("PlaneMesh_wjth2")
-surface_material_override/0 = SubResource("StandardMaterial3D_lfs8j")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.118648, 12.8912)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-transform = Transform3D(58.1943, 0, 0, 0, 20, 0, 0, 0, 51.962, 0, -8.88688, 23.1233)
-shape = SubResource("BoxShape3D_o21ge")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-transform = Transform3D(30.4712, 0, 0, 0, 1, 0, 0, 0, 23.0353, 0, 1.071, 20)
-mesh = SubResource("PlaneMesh_wjth2")
-surface_material_override/0 = SubResource("StandardMaterial3D_lfs8j")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -2.84058, 0)
 mesh = SubResource("PlaneMesh_qwv7n")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_8prgf")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
@@ -105,7 +86,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 sky_mode = 1
 
 [node name="House" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.98732, 38.1609)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="House"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -218,6 +199,19 @@ shape = SubResource("BoxShape3D_pre73")
 transform = Transform3D(0.34302, 0, 0, 0, 8.86238, 0, 0, 0, 0.287163, 0, -4.07582, 0)
 mesh = SubResource("BoxMesh_3dbj8")
 surface_material_override/0 = SubResource("StandardMaterial3D_2t4rb")
+
+[node name="Sand" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="Sand"]
+transform = Transform3D(50, 0, 0, 0, 5, 0, 0, 0, 50, 0, -2.538, 0)
+physics_material_override = SubResource("PhysicsMaterial_5jom2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sand/Floor"]
+shape = SubResource("SphereShape3D_okbku")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sand/Floor"]
+mesh = SubResource("SphereMesh_fs1rt")
+surface_material_override/0 = SubResource("StandardMaterial3D_k86y8")
 
 [connection signal="area_entered" from="House" to="CharacterBody3D" method="_on_house_area_entered"]
 [connection signal="body_entered" from="House" to="CharacterBody3D" method="_on_house_body_entered"]
