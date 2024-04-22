@@ -77,6 +77,12 @@ data = PackedVector3Array(0, 0.5, 0, 0, 0.5, 0, 0, 0.4977, 0.0475, 0, 0.5, 0, 0.
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_orkwd")
 
+[node name="Quest" type="Label" parent="."]
+unique_name_in_owner = true
+offset_right = 270.0
+offset_bottom = 99.0
+text = "Go fishing"
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamWAV_aawvg")
 script = ExtResource("2_tf6oe")

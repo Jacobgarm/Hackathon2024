@@ -6,9 +6,8 @@ const JUMP_VELOCITY = 4.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
-var quest = "Go to bed"
 var sleeping = false
+var quest = "Go fishing"
 var fishing = false
 var catch_time = 0
 var time = 0
@@ -20,6 +19,7 @@ func next_quest():
 		quest = "Go fishing"
 	else:
 		quest = "Go to bed"
+	%Quest.text = quest
 
 func _physics_process(delta):
 	time += delta
@@ -28,7 +28,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 	
 	if fishing:
-		if catch_time > time:
+		if catch_time < time:
 			$RodHolder/Bobber.visible=false
 			return
 		return
@@ -70,19 +70,22 @@ func _input(event):
 		if fishing:
 			$RodHolder.visible = false
 			$RodHolder/Bobber.visible = false
+			if time > catch_time && time < catch_time + 1:
+				next_quest()
 		else:
 			var pos = event.position
 			var ang = atan2(pos.y - 648/2, pos.x - 1152/2)
 			$RodHolder.rotation.y = -ang + PI
 			print(ang)
 			$RodHolder.visible = true
+			$RodHolder/Bobber.visible = true
 			#$RodHolder/Bobber.position = position
 			#$RodHolder/Bobber.position.x
 			#$RodHolder/Bobber.linear_velocity.x = 2
 			#$RodHolder/Bobber.linear_velocity.y = 0
 			var day = get_tree().get_current_scene().current_day
-			$RodHolder/Bobber.position.y = get_tree().get_current_scene().water_levels[day-1]
-			catch_time = time + randf_range(2.0,5.0)
+			$RodHolder/Bobber.position.y = get_tree().get_current_scene().water_levels[day-1]+1
+			catch_time = time + randf_range(1.0,4.0)
 			pass
 		fishing = !fishing
 		
