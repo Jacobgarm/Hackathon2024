@@ -7,6 +7,14 @@ const JUMP_VELOCITY = 4.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+var quest = "Go to bed"
+var fishing = false
+
+func next_quest():
+	if quest == "Go to bed":
+		quest = "Go fishing"
+	else:
+		quest = "Go to bed"
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -16,6 +24,9 @@ func _physics_process(delta):
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		
+	if Input.is_action_just_pressed("Throw"):
+		$stick.visible = true
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -29,7 +40,6 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	print(position.z)
 	if position.z > 34 && position.z < 42.5:
 		%Roof.visible = false
 	else:
