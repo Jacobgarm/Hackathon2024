@@ -4,7 +4,7 @@ var water_levels = [0.0, 15.0/245.0, 60.0/245.0, 360.0/245.0, 465.0/245.0, 585.0
 var years = [1920, 1930, 1940, 2000, 2010, 2020, 2080]
 
 func set_water_level(day):
-	$MeshInstance3D.position.y = water_levels[day - 1]
+	$Water.position.y = water_levels[day - 1]
 	
 func current_year(day):
 	return years[day - 1]
