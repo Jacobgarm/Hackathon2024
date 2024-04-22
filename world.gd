@@ -4,9 +4,6 @@ var water_levels = [0.0, 15.0/245.0, 60.0/245.0, 360.0/245.0, 465.0/245.0, 585.0
 var years = [1920, 1930, 1940, 2000, 2010, 2020, 2080]
 
 func set_water_level(day):
-	$Music.stop()
-	$Music.stream = "res://music/celestia.wav"
-	$Music.play()
 	$MeshInstance3D.position.y = water_levels[day - 1]
 	
 func current_year(day):
@@ -19,7 +16,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if current_day == 1:
-		set_water_level(2)
+		set_water_level(1930)
 		current_day = 2
 	pass
 	
