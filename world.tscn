@@ -118,7 +118,8 @@ mesh = SubResource("CylinderMesh_mfn4o")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_ihl3d")
 
-[node name="Bobber" type="RigidBody3D" parent="CharacterBody3D/RodHolder"]
+[node name="Bobber" type="StaticBody3D" parent="CharacterBody3D/RodHolder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.335085, 4.30158)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/RodHolder/Bobber"]
 shape = SubResource("SphereShape3D_c7ln0")

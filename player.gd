@@ -30,6 +30,7 @@ func _physics_process(delta):
 	
 	if fishing:
 		if catch_time > time:
+			$RodHolder/Bobber.visible=false
 			return
 		return
 	
@@ -64,17 +65,19 @@ func _input(event):
 			
 		if fishing:
 			$RodHolder.visible = false
+			$RodHolder/Bobber.visible = false
 		else:
 			var pos = event.position
 			var ang = atan2(pos.y - 648/2, pos.x - 1152/2)
 			$RodHolder.rotation.y = -ang + PI
 			print(ang)
 			$RodHolder.visible = true
-			$RodHolder/Bobber.position = 0
-			$RodHolder/Bobber.position.x += 2
-			$RodHolder/Bobber.linear_velocity.x = 2
-			$RodHolder/Bobber.linear_velocity.y = 0
-			$RodHolder/Bobber.linear_velocity.z = 0
+			#$RodHolder/Bobber.position = position
+			#$RodHolder/Bobber.position.x
+			#$RodHolder/Bobber.linear_velocity.x = 2
+			#$RodHolder/Bobber.linear_velocity.y = 0
+			var day = get_tree().get_current_scene().current_day
+			$RodHolder/Bobber.position.y = get_tree().get_current_scene().water_levels[day-1]
 			catch_time = time + randf_range(2.0,5.0)
 			pass
 		fishing = !fishing
