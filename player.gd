@@ -20,13 +20,14 @@ func next_quest():
 		quest = "Go to bed"
 
 func _physics_process(delta):
-	time = 
+	time += delta
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
 	if fishing:
-		if catch_time 
+		if catch_time > time:
+			return
 		return
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -55,7 +56,7 @@ func _input(event):
 		if fishing:
 			pass
 		else:
-			catch_time = randf_range(2.0,5.0)
+			catch_time = time + randf_range(2.0,5.0)
 			pass
 		fishing = !fishing
 		
