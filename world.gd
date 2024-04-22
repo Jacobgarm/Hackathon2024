@@ -9,7 +9,7 @@ func set_water_level(day):
 func current_year(day):
 	return years[day - 1]
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first time. 
 func _ready():
 	pass # Replace with function body.
 
