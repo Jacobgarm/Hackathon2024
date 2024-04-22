@@ -50,7 +50,7 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	move_and_slide()
-	if position.z > -3.5 && position.z < 3.5:
+	if position.z > -4 && position.z < 4:
 		%Roof.visible = false
 	else:
 		%Roof.visible = true
@@ -64,7 +64,6 @@ func _input(event):
 			var parent = get_parent_node_3d()
 			if parent.current_day <= 6:
 				parent.next_day()
-				parent.current_day += 1
 				print(parent.current_day)
 			
 		if fishing:
