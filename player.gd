@@ -22,7 +22,6 @@ func next_quest():
 		quest = "Go to bed"
 
 func _physics_process(delta):
-	print(sleeping)
 	time += delta
 	# Add the gravity.
 	if not is_on_floor():
@@ -60,8 +59,13 @@ func _physics_process(delta):
 
 func _input(event):
 	if event is InputEventMouseButton:
-		if abs(position - Vector3(-3.652, -1.755, 1.523)) < 5.0:
-			sleeping = true	
+		if (position - Vector3(-3.652, -1.755, 1.523)).length() < 5.0 && quest == 'Go to bed':
+			sleeping = true
+			next_quest()
+			var parent = get_parent_node_3d()
+			if parent.current_day <= 6:
+				parent.current_day += 1
+				print(parent.current_day)
 			
 		if fishing:
 			$RodHolder.visible = false
