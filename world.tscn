@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
-[ext_resource type="AudioStream" uid="uid://cvw5e0bhl0my6" path="res://music/celestia.wav" id="2_dnwve"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_aawvg"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qwv7n"]
 
@@ -59,8 +60,7 @@ data = PackedVector3Array(0, 0.5, 0, 0, 0.5, 0, 0, 0.4977, 0.0475, 0, 0.5, 0, 0.
 script = ExtResource("1_orkwd")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_dnwve")
-autoplay = true
+stream = SubResource("AudioStreamWAV_aawvg")
 
 [node name="Water" type="Node3D" parent="."]
 
