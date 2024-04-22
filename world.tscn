@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=36 format=3 uid="uid://cc7lw43mrp7me"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
