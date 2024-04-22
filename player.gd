@@ -14,8 +14,6 @@ var time = 0
 
 func next_quest():
 	if quest == "Go to bed":
-		quest = "Get the news"
-	elif quest == "Get the news":
 		quest = "Go fishing"
 	else:
 		quest = "Go to bed"
@@ -52,7 +50,7 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	if position.z > 34 && position.z < 42.5:
+	if position.z > -3.5 && position.z < 3.5:
 		%Roof.visible = false
 	else:
 		%Roof.visible = true
@@ -62,8 +60,10 @@ func _input(event):
 		if (position - Vector3(-3.652, -1.755, 1.523)).length() < 5.0 && quest == 'Go to bed':
 			sleeping = true
 			next_quest()
+			
 			var parent = get_parent_node_3d()
 			if parent.current_day <= 6:
+				parent.next_day()
 				parent.current_day += 1
 				print(parent.current_day)
 			
@@ -72,7 +72,7 @@ func _input(event):
 			$RodHolder/Bobber.visible = false
 			if time > catch_time && time < catch_time + 1:
 				next_quest()
-		else:
+		elif quest == "Go fishing":
 			var pos = event.position
 			var ang = atan2(pos.y - 648/2, pos.x - 1152/2)
 			$RodHolder.rotation.y = -ang + PI

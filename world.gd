@@ -8,6 +8,11 @@ func set_water_level(day):
 	
 func current_year(day):
 	return years[day - 1]
+	
+func next_day():
+	current_day += 1
+	set_water_level(current_day)
+	$Year.text = str(current_year(current_day))
 
 # Called when the node enters the scene tree for the first time. 
 func _ready():
