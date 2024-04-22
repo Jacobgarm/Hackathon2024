@@ -54,8 +54,18 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseButton:
 		if fishing:
-			pass
+			$RodHolder.visible = false
 		else:
+			var pos = event.position
+			var ang = atan2(pos.y - 648/2, pos.x - 1152/2)
+			$RodHolder.rotation.y = -ang + PI
+			print(ang)
+			$RodHolder.visible = true
+			$RodHolder/Bobber.position = 0
+			$RodHolder/Bobber.position.x += 2
+			$RodHolder/Bobber.linear_velocity.x = 2
+			$RodHolder/Bobber.linear_velocity.y = 0
+			$RodHolder/Bobber.linear_velocity.z = 0
 			catch_time = time + randf_range(2.0,5.0)
 			pass
 		fishing = !fishing

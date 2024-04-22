@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=31 format=3 uid="uid://cc7lw43mrp7me"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
@@ -20,6 +20,9 @@ albedo_color = Color(1, 0.603922, 0.466667, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ihl3d"]
 albedo_color = Color(0.298039, 0.176471, 0.137255, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c7ln0"]
+radius = 0.2
 
 [sub_resource type="SphereMesh" id="SphereMesh_v0hxb"]
 
@@ -99,17 +102,22 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.491325, 0)
 visible = false
 
-[node name="Rod" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="RodHolder" type="Node3D" parent="CharacterBody3D"]
+visible = false
+
+[node name="Rod" type="MeshInstance3D" parent="CharacterBody3D/RodHolder"]
 transform = Transform3D(0.2, 0, 0, 0, 0.64011, -0.153657, 0, 0.768283, 0.128022, 0, 0.179327, 0.905861)
 mesh = SubResource("CylinderMesh_mfn4o")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_ihl3d")
 
-[node name="Bobber" type="RigidBody3D" parent="CharacterBody3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+[node name="Bobber" type="RigidBody3D" parent="CharacterBody3D/RodHolder"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Bobber"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/RodHolder/Bobber"]
+shape = SubResource("SphereShape3D_c7ln0")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Bobber"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/RodHolder/Bobber"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("SphereMesh_v0hxb")
 surface_material_override/0 = SubResource("StandardMaterial3D_cksqr")
 
