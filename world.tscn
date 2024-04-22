@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=30 format=3 uid="uid://cc7lw43mrp7me"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
@@ -15,6 +15,16 @@ albedo_color = Color(0.117647, 0.243137, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17gre"]
 albedo_color = Color(1, 0.603922, 0.466667, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mfn4o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ihl3d"]
+albedo_color = Color(0.298039, 0.176471, 0.137255, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_v0hxb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cksqr"]
+albedo_color = Color(1, 0.0823529, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wqufl"]
 
@@ -71,7 +81,7 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_8prgf")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75405, 17.8843)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75405, -14.1385)
 script = ExtResource("1_ra2kr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
@@ -88,6 +98,20 @@ current = true
 [node name="Camera3D2" type="Camera3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.491325, 0)
 visible = false
+
+[node name="Rod" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.64011, -0.153657, 0, 0.768283, 0.128022, 0, 0.179327, 0.905861)
+mesh = SubResource("CylinderMesh_mfn4o")
+surface_material_override/0 = SubResource("StandardMaterial3D_ihl3d")
+
+[node name="Bobber" type="RigidBody3D" parent="CharacterBody3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Bobber"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Bobber"]
+mesh = SubResource("SphereMesh_v0hxb")
+surface_material_override/0 = SubResource("StandardMaterial3D_cksqr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 14, 19)
