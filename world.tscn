@@ -1,5 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=23 format=3 uid="uid://cc7lw43mrp7me"]
 
+[ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o21ge"]
@@ -36,11 +37,20 @@ albedo_color = Color(1, 0.603922, 0.466667, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_thwdw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cg8ip"]
-albedo_color = Color(0.686275, 1, 1, 1)
+albedo_color = Color(0.419608, 0.862745, 0.411765, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pre73"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2klk"]
+albedo_color = Color(0.211765, 0.188235, 0.0745098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3dbj8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2t4rb"]
+albedo_color = Color(0.211765, 0.188235, 0.0745098, 1)
+
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_orkwd")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(3.10195, 0, 0, 0, 0.99239, 0.123134, 0, -0.123134, 0.99239, 0, 0, 0)
@@ -174,25 +184,40 @@ unique_name_in_owner = true
 transform = Transform3D(10, 0, 0, 0, 1.2, 0, 0, 0, 10, -0.162131, 3.30113, 0)
 mesh = SubResource("PrismMesh_mq6y5")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="House"]
+[node name="Bed" type="StaticBody3D" parent="House"]
 transform = Transform3D(1.76818, 0, 0, 0, 0.724604, 0, 0, 0, 4.03336, -3.65175, -1.7551, 1.52298)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Bed"]
 mesh = SubResource("BoxMesh_thwdw")
 surface_material_override/0 = SubResource("StandardMaterial3D_cg8ip")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Bed"]
 shape = SubResource("BoxShape3D_pre73")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="House"]
+[node name="Pillow" type="StaticBody3D" parent="House"]
 transform = Transform3D(1.21407, 0, 0, 0, 0.236921, 0, 0, 0, 0.790689, -3.65175, -1.35248, 2.91219)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="House/StaticBody3D2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Pillow"]
 mesh = SubResource("BoxMesh_thwdw")
 surface_material_override/0 = SubResource("StandardMaterial3D_cg8ip")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="House/StaticBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Pillow"]
 shape = SubResource("BoxShape3D_pre73")
+
+[node name="Table" type="StaticBody3D" parent="House"]
+transform = Transform3D(1.7851, 0, 0, 0, 0.236921, 0, 0, 0, 1.77408, 2.80548, -0.30506, -2.51218)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="House/Table"]
+mesh = SubResource("BoxMesh_thwdw")
+surface_material_override/0 = SubResource("StandardMaterial3D_f2klk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Table"]
+shape = SubResource("BoxShape3D_pre73")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="House/Table"]
+transform = Transform3D(0.34302, 0, 0, 0, 8.86238, 0, 0, 0, 0.287163, 0, -4.07582, 0)
+mesh = SubResource("BoxMesh_3dbj8")
+surface_material_override/0 = SubResource("StandardMaterial3D_2t4rb")
 
 [connection signal="area_entered" from="House" to="CharacterBody3D" method="_on_house_area_entered"]
 [connection signal="body_entered" from="House" to="CharacterBody3D" method="_on_house_body_entered"]
