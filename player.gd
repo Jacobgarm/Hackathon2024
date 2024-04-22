@@ -29,6 +29,8 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	print(position.x)
-	if position.x >2:
-		print(2)
+	print(position.z)
+	if position.z > 34 && position.z < 42.5:
+		%Roof.visible = false
+	else:
+		%Roof.visible = true
