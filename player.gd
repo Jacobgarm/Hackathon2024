@@ -51,9 +51,9 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	if position.z > -4 && position.z < 4:
-		%Roof.visible = false
+		%Roof.transparency = 1
 	else:
-		%Roof.visible = true
+		%Roof.transparency = 0
 
 func _input(event):
 	if event is InputEventMouseButton:

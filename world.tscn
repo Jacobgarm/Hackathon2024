@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cc7lw43mrp7me"]
+[gd_scene load_steps=41 format=3 uid="uid://cc7lw43mrp7me"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_orkwd"]
 [ext_resource type="Script" path="res://player.gd" id="1_ra2kr"]
@@ -118,6 +118,8 @@ albedo_color = Color(1, 0.0823529, 0, 1)
 
 [sub_resource type="PrismMesh" id="PrismMesh_mq6y5"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vssgf"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_thwdw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cg8ip"]
@@ -188,7 +190,7 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_51uha")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75405, -14.1385)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24595, -14.1385)
 script = ExtResource("1_ra2kr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
@@ -228,7 +230,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_cksqr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 28.2065, 19)
-light_color = Color(1, 1, 0.6, 1)
+light_color = Color(1, 0.811765, 0.6, 1)
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
 sky_mode = 1
 
 [node name="House" type="Area3D" parent="."]
@@ -314,6 +318,7 @@ mesh = SubResource("BoxMesh_5xgnu")
 unique_name_in_owner = true
 transform = Transform3D(10, 0, 0, 0, 1.2, 0, 0, 0, 10, -0.162131, 3.30113, 0)
 mesh = SubResource("PrismMesh_mq6y5")
+surface_material_override/0 = SubResource("StandardMaterial3D_vssgf")
 
 [node name="Bed" type="StaticBody3D" parent="House"]
 transform = Transform3D(1.76818, 0, 0, 0, 0.724604, 0, 0, 0, 4.03336, -3.65175, -1.7551, 1.52298)
@@ -349,6 +354,12 @@ shape = SubResource("BoxShape3D_pre73")
 transform = Transform3D(0.34302, 0, 0, 0, 8.86238, 0, 0, 0, 0.287163, 0, -4.07582, 0)
 mesh = SubResource("BoxMesh_3dbj8")
 surface_material_override/0 = SubResource("StandardMaterial3D_2t4rb")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 0)
+light_color = Color(0.890196, 0.462745, 0.117647, 1)
+light_energy = 4.888
+omni_range = 44.082
 
 [node name="Sand" type="Node3D" parent="."]
 
